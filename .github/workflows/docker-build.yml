@@ -1,4 +1,4 @@
-name: Deploy Flask App
+name: Prueba num 1 (Flask)
 
 on:
   push:
@@ -6,30 +6,21 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
+  decir-hola:
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     environment: produccion
     steps:
-      - name: Mostrar mensaje
-        run: echo "Iniciando despliegue de Flask"
-
-      - name: Enviar Petición
-        run: |
-          curl -X POST 'https://webhook.site/892f2749-aba3-44c8-af63-04640edf7a85' \
-          -H 'content-type: application/json' \
-          -d '{"nombre": "Branlee  Jose"}'
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Logearse en GHCR
+      - name: Logearnos en GHCR
         run: echo "${{ secrets.TOKEN1 }}" | docker login ghcr.io -u branliprime --password-stdin
 
-      - name: Crear imagen Docker para Flask
+      - name: Crear imagen
         run: docker build . -t ghcr.io/branliprime/flask-image:latest
 
-      - name: Subir imagen a GHCR
+      - name: Desplegar imagen
         run: docker push ghcr.io/branliprime/flask-image:latest
